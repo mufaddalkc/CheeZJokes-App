@@ -35,12 +35,19 @@ const Button = styled.button`
   }
 `;
 
-const Sidebar = ({ fetchJokes }) => {
+const Sidebar = ({ fetchJokes, infiniteMode, toggleMode }) => {
   return (
     <SidebarContainer>
       <Title>Dad Jokes</Title>
       <Emoji>😂</Emoji>
-      <Button onClick={fetchJokes}>New Jokes</Button> {}
+      {infiniteMode ? (
+        <Button onClick={toggleMode}>Switch to Button Mode</Button>
+      ) : (
+        <>
+          <Button onClick={fetchJokes}>New Jokes</Button>
+          <Button onClick={toggleMode}>Switch to Infinite Scroll</Button>
+        </>
+      )}
     </SidebarContainer>
   );
 };

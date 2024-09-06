@@ -5,6 +5,7 @@ const JokesListContainer = styled.div`
   width: 70%;
   padding: 20px;
   overflow-y: auto;
+  // max-width: 600px;
 `;
 
 const JokesList = ({ jokes, onVote }) => {
