@@ -26,10 +26,10 @@ const JokesListContainer = styled.div`
 const App = () => {
   const [jokes, setJokes] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1); // Single page state for both modes
+  const [page, setPage] = useState(1);
   const [hasMoreJokes, setHasMoreJokes] = useState(true);
   const [infiniteMode, setInfiniteMode] = useState(true);
-  const [offset, setOffset] = useState(0); // Single offset state for both modes
+  const [offset, setOffset] = useState(0);
 
   useEffect(() => {
     if (infiniteMode) {
