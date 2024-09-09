@@ -14,7 +14,7 @@ const AppContainer = styled.div`
 const ScrollContainer = styled.div`
   flex: 1;
   padding: 20px;
-  overflow-y: auto;
+  overflow-y: hidden; /* Remove overflow-y: auto from this container */
 `;
 
 const JokesListContainer = styled.div`
@@ -23,9 +23,15 @@ const JokesListContainer = styled.div`
   overflow-y: auto;
 `;
 
+const InfiniteScrollWrapper = styled.div`
+  overflow-y: auto;
+  height: 100%;
+`;
+
 const App = () => {
   const [jokes, setJokes] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMoreJokes, setHasMoreJokes] = useState(true);
   const [infiniteMode, setInfiniteMode] = useState(true);
@@ -40,7 +46,8 @@ const App = () => {
   }, [infiniteMode]);
 
   const fetchJokesInfinite = async () => {
-    setLoading(true);
+    if (loadingMore) return;
+    setLoadingMore(true);
 
     try {
       const response = await axios.get("https://icanhazdadjoke.com/search", {
@@ -66,7 +73,7 @@ const App = () => {
     } catch (error) {
       console.error("Error fetching jokes:", error);
     } finally {
-      setLoading(false);
+      setLoadingMore(false);
     }
   };
 
@@ -117,14 +124,21 @@ const App = () => {
       />
       {infiniteMode ? (
         <ScrollContainer>
-          <InfiniteScroll
-            dataLength={jokes.length}
-            next={fetchJokesInfinite}
-            hasMore={hasMoreJokes}
-            loader={<h4>Loading...</h4>}
-          >
-            <JokesList jokes={jokes} onVote={handleVote} />
-          </InfiniteScroll>
+          <InfiniteScrollWrapper id="scroll-container">
+            <InfiniteScroll
+              dataLength={jokes.length}
+              next={() => {
+                if (!loadingMore) {
+                  fetchJokesInfinite();
+                }
+              }}
+              hasMore={hasMoreJokes}
+              loader={<h4>Loading...</h4>}
+              scrollableTarget="scroll-container"
+            >
+              <JokesList jokes={jokes} onVote={handleVote} />
+            </InfiniteScroll>
+          </InfiniteScrollWrapper>
         </ScrollContainer>
       ) : (
         <JokesListContainer>
