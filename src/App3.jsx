@@ -14,7 +14,7 @@ const AppContainer = styled.div`
 const ScrollContainer = styled.div`
   flex: 1;
   padding: 20px;
-  overflow-y: hidden; /* Remove overflow-y: auto from this container */
+  overflow-y: hidden;
 `;
 
 const JokesListContainer = styled.div`
@@ -35,7 +35,6 @@ const App = () => {
   const [page, setPage] = useState(1);
   const [hasMoreJokes, setHasMoreJokes] = useState(true);
   const [infiniteMode, setInfiniteMode] = useState(true);
-  const [offset, setOffset] = useState(0);
 
   useEffect(() => {
     if (infiniteMode) {

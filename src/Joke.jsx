@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 const JokeContainer = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   background-color: #fff;
   padding: 10px;
   margin-bottom: 10px;
@@ -13,9 +13,19 @@ const JokeContainer = styled.div`
 `;
 
 const JokeText = styled.p`
-  flex: 1;
   margin: 0 10px;
   color: black; /* Set the joke text color to black */
+  flex: 1;
+`;
+
+const VoteContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
 `;
 
 const VoteButton = styled.button`
@@ -24,6 +34,7 @@ const VoteButton = styled.button`
   cursor: pointer;
   font-size: 1.5rem;
   color: ${(props) => (props.up ? "green" : "red")};
+  margin: 0 10px;
 `;
 
 const Score = styled.div`
@@ -47,13 +58,15 @@ const Joke = ({ joke, onVote }) => {
 
   return (
     <JokeContainer>
-      <VoteButton up onClick={() => onVote(joke.id, 1)}>
-        ⬆️
-      </VoteButton>
-      <Score>{joke.score}</Score>
-      <VoteButton onClick={() => onVote(joke.id, -1)}>⬇️</VoteButton>
-      <JokeText>{joke.joke}</JokeText> {}
-      <Emoji>{getEmoji(joke.score)}</Emoji>
+      <JokeText>{joke.joke}</JokeText>
+      <VoteContainer>
+        <VoteButton up onClick={() => onVote(joke.id, 1)}>
+          ⬆️
+        </VoteButton>
+        <Score>{joke.score}</Score>
+        <VoteButton onClick={() => onVote(joke.id, -1)}>⬇️</VoteButton>
+        <Emoji>{getEmoji(joke.score)}</Emoji>
+      </VoteContainer>
     </JokeContainer>
   );
 };

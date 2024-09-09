@@ -5,7 +5,12 @@ const JokesListContainer = styled.div`
   width: 70%;
   padding: 20px;
   overflow-y: auto;
-  // max-width: 600px;
+  max-width: 600px;
+
+  @media only screen and (max-width: 768px) {
+    width: 90%;
+    padding: 10px;
+  }
 `;
 
 const JokesList = ({ jokes, onVote }) => {
